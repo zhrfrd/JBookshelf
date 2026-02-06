@@ -2,6 +2,7 @@ package com.zhrfrd.jbookshelf;
 
 import com.zhrfrd.jbookshelf.model.Book;
 import com.zhrfrd.jbookshelf.repository.BookRepository;
+import com.zhrfrd.jbookshelf.service.BookService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +16,7 @@ public class JBookshelfApplication {
 	}
 
     @Bean
-    CommandLineRunner demo(BookRepository bookRepository) {
+    CommandLineRunner demo(BookService bookService) {
         return args -> {
             Book book = new Book(
                     "Clean Code",
@@ -24,9 +25,9 @@ public class JBookshelfApplication {
                     2008
             );
 
-            bookRepository.save(book);
+            bookService.create(book);
 
-            System.out.println("Books in DB: " + bookRepository.count());
+            System.out.println("Books in DB: " + bookService.findAll().size());
         };
     }
 
