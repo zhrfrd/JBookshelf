@@ -1,5 +1,7 @@
 package com.zhrfrd.jbookshelf.service;
 
+import com.zhrfrd.jbookshelf.dto.BookRequest;
+import com.zhrfrd.jbookshelf.dto.BookResponse;
 import com.zhrfrd.jbookshelf.model.Book;
 import com.zhrfrd.jbookshelf.repository.BookRepository;
 import org.springframework.stereotype.Service;
@@ -29,5 +31,26 @@ public class BookService {
 
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    public Book create(BookRequest request) {
+        Book book = new Book(
+                request.getTitle(),
+                request.getAuthor(),
+                request.getIsbn(),
+                request.getPublishedYear()
+        );
+
+        return bookRepository.save(book);
+    }
+
+    public BookResponse toResponse(Book book) {
+        return new BookResponse(
+                book.getId(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getIsbn(),
+                book.getPublishedYear()
+        );
     }
 }

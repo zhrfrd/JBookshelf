@@ -1,8 +1,11 @@
 package com.zhrfrd.jbookshelf.controller;
 
+import com.zhrfrd.jbookshelf.dto.BookRequest;
+import com.zhrfrd.jbookshelf.dto.BookResponse;
 import com.zhrfrd.jbookshelf.exception.ResourceNotFoundException;
 import com.zhrfrd.jbookshelf.model.Book;
 import com.zhrfrd.jbookshelf.service.BookService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,18 +22,23 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Book create(@RequestBody Book book) {
+    public Book create(@Valid @RequestBody BookRequest bookRequest) {
+        Book book = bookService.create(bookRequest);
         return bookService.create(book);
     }
 
     @GetMapping
-    public List<Book> findAll() {
-        return bookService.findAll();
+    public List<BookResponse> findAll() {
+        return bookService.findAll()
+                .stream()
+                .map(bookService::toResponse)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public Book findById(@PathVariable Long id) {
-        return bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
+    public BookResponse findById(@PathVariable Long id) {
+        Book book = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
+        return bookService.toResponse(book);
     }
 
     @DeleteMapping("/{id}")
