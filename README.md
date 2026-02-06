@@ -1,6 +1,6 @@
-# JBookshelf — Library Manager API
+# JBookshelf
 
-JBookshelf is a **RESTful Library Manager API** built with **Spring Boot**.  
+JBookshelf is a RESTful Library Manager API built with **Spring Boot**.  
 The project is designed as a personal learning exercise.
 
 ## Features
@@ -12,8 +12,6 @@ The project is designed as a personal learning exercise.
 - Input validation with clear error messages.
 - Clean JSON error responses.
 
----
-
 ## Architecture
 
 The project follows a layered architecture:
@@ -21,8 +19,6 @@ The project follows a layered architecture:
 ```
 Controller → Service → Repository → Database
 ```
-
----
 
 ## Tech Stack
 
@@ -34,8 +30,6 @@ Controller → Service → Repository → Database
   - H2 Database
 - Maven
 
----
-
 ## DTOs used
 
 | DTO | Purpose |
@@ -44,8 +38,6 @@ Controller → Service → Repository → Database
 | `BookReplaceRequest` | Replace (PUT) |
 | `BookUpdateRequest` | Partial update (PATCH) |
 | `BookResponse` | Output |
-
----
 
 ## Endpoints
 
@@ -63,21 +55,15 @@ POST /api/books
 }
 ```
 
----
-
 ### Get all books (paginated)
 ```
 GET /api/books?page=0&size=10&sort=title,asc
 ```
 
----
-
 ### Get book by ID
 ```
 GET /api/books/{id}
 ```
-
----
 
 ### Replace book (PUT)
 ```
@@ -93,8 +79,6 @@ PUT /api/books/{id}
 }
 ```
 
----
-
 ### Partial update (PATCH)
 ```
 PATCH /api/books/{id}
@@ -106,14 +90,10 @@ PATCH /api/books/{id}
 }
 ```
 
----
-
 ### Delete book
 ```
 DELETE /api/books/{id}
 ```
-
----
 
 ## Error Handling
 
@@ -141,8 +121,6 @@ The API uses centralized error handling via `@ControllerAdvice`.
   "message": "Book not found"
 }
 ```
-
----
 
 ## Running the project
 
