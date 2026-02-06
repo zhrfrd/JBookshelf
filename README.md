@@ -141,8 +141,8 @@ jdbc:h2:mem:jbookshelfdb
 ---
 
 ## Next improvements
--[ ] PostgreSQL migration
--[ ] Unit & integration testing
--[ ] Authentication & authorization
--[ ] API versioning
--[ ] OpenAPI / Swagger documentation
+- [ ] PostgreSQL migration
+- [ ] Unit & integration testing
+- [ ] Authentication & authorization
+- [ ] API versioning
+- [ ] OpenAPI / Swagger documentation
