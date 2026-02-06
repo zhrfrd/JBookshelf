@@ -7,13 +7,10 @@ import jakarta.validation.constraints.Size;
 public class BookRequest {
     @NotBlank(message = "Title must not be empty")
     private String title;
-
     @NotBlank(message = "Author must not be empty")
     private String author;
-
     @Size(min = 10, max = 13, message = "ISBN must be 10–13 characters")
     private String isbn;
-
     @NotNull(message = "Published year is required")
     private Integer publishedYear;
 

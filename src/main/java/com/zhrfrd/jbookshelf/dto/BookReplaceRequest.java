@@ -1,13 +1,18 @@
 package com.zhrfrd.jbookshelf.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-// Partial modification of a book (Patch)
-public class BookUpdateRequest {
+// Full modification of a book (Put)
+public class BookReplaceRequest {
+    @NotBlank(message = "Title must not be empty")
     private String title;
+    @NotBlank(message = "Author must not be empty")
     private String author;
     @Size(min = 10, max = 13, message = "ISBN must be 10–13 characters")
     private String isbn;
+    @NotNull(message = "Published year is required")
     private Integer publishedYear;
 
     public String getTitle() {

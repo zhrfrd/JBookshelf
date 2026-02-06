@@ -1,5 +1,6 @@
 package com.zhrfrd.jbookshelf.controller;
 
+import com.zhrfrd.jbookshelf.dto.BookReplaceRequest;
 import com.zhrfrd.jbookshelf.dto.BookRequest;
 import com.zhrfrd.jbookshelf.dto.BookResponse;
 import com.zhrfrd.jbookshelf.dto.BookUpdateRequest;
@@ -52,5 +53,11 @@ public class BookController {
     public BookResponse patchUpdate(@PathVariable Long id, @Valid @RequestBody BookUpdateRequest request) {
         Book updated = bookService.patchUpdate(id, request);
         return bookService.toResponse(updated);
+    }
+
+    @PutMapping("/{id}")
+    public BookResponse replace(@PathVariable Long id, @Valid @RequestBody BookReplaceRequest request) {
+        Book replaced = bookService.replace(id, request);
+        return bookService.toResponse(replaced);
     }
 }
