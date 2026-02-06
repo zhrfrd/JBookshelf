@@ -8,6 +8,9 @@ import com.zhrfrd.jbookshelf.exception.ResourceNotFoundException;
 import com.zhrfrd.jbookshelf.model.Book;
 import com.zhrfrd.jbookshelf.service.BookService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,11 +33,8 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookResponse> findAll() {
-        return bookService.findAll()
-                .stream()
-                .map(bookService::toResponse)
-                .toList();
+    public Page<BookResponse> findAll(@PageableDefault(size = 10, sort = "title") Pageable pageable) {
+        return bookService.findAll(pageable).map(bookService::toResponse);
     }
 
     @GetMapping("/{id}")

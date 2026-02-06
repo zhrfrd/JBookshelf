@@ -7,6 +7,8 @@ import com.zhrfrd.jbookshelf.dto.BookUpdateRequest;
 import com.zhrfrd.jbookshelf.exception.ResourceNotFoundException;
 import com.zhrfrd.jbookshelf.model.Book;
 import com.zhrfrd.jbookshelf.repository.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,5 +92,9 @@ public class BookService {
         book.updatePublishedYear(request.getPublishedYear());
 
         return book;
+    }
+
+    public Page<Book> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable);
     }
 }
