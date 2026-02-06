@@ -2,9 +2,12 @@ package com.zhrfrd.jbookshelf.service;
 
 import com.zhrfrd.jbookshelf.dto.BookRequest;
 import com.zhrfrd.jbookshelf.dto.BookResponse;
+import com.zhrfrd.jbookshelf.dto.BookUpdateRequest;
+import com.zhrfrd.jbookshelf.exception.ResourceNotFoundException;
 import com.zhrfrd.jbookshelf.model.Book;
 import com.zhrfrd.jbookshelf.repository.BookRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,5 +55,27 @@ public class BookService {
                 book.getIsbn(),
                 book.getPublishedYear()
         );
+    }
+
+    @Transactional
+    public Book patchUpdate(Long id, BookUpdateRequest request) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
+
+        if (request.getTitle() != null) {
+            book.updateTitle(request.getTitle());
+        }
+        if (request.getAuthor() != null) {
+            book.updateAuthor(request.getAuthor());
+        }
+        if (request.getIsbn() != null) {
+            book.updateIsbn(request.getIsbn());
+        }
+        if (request.getPublishedYear() != null) {
+            book.updatePublishedYear(request.getPublishedYear());
+        }
+
+        // No explicit save needed: because we're inside @Transactional,
+        // Hibernate will flush changes automatically at commit.
+        return book;
     }
 }

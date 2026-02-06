@@ -49,4 +49,20 @@ public class Book {
     public Integer getPublishedYear() {
         return publishedYear;
     }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateAuthor(String author) {
+        this.author = author;
+    }
+
+    public void updateIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void updatePublishedYear(Integer publishedYear) {
+        this.publishedYear = publishedYear;
+    }
 }

@@ -2,6 +2,7 @@ package com.zhrfrd.jbookshelf.controller;
 
 import com.zhrfrd.jbookshelf.dto.BookRequest;
 import com.zhrfrd.jbookshelf.dto.BookResponse;
+import com.zhrfrd.jbookshelf.dto.BookUpdateRequest;
 import com.zhrfrd.jbookshelf.exception.ResourceNotFoundException;
 import com.zhrfrd.jbookshelf.model.Book;
 import com.zhrfrd.jbookshelf.service.BookService;
@@ -45,5 +46,11 @@ public class BookController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         bookService.deleteById(id);
+    }
+
+    @PatchMapping("/{id}")
+    public BookResponse patchUpdate(@PathVariable Long id, @Valid @RequestBody BookUpdateRequest request) {
+        Book updated = bookService.patchUpdate(id, request);
+        return bookService.toResponse(updated);
     }
 }

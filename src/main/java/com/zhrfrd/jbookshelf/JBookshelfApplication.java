@@ -14,21 +14,4 @@ public class JBookshelfApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JBookshelfApplication.class, args);
 	}
-
-    @Bean
-    CommandLineRunner demo(BookService bookService) {
-        return args -> {
-            Book book = new Book(
-                    "Clean Code",
-                    "Robert C. Martin",
-                    "9780132350884",
-                    2008
-            );
-
-            bookService.create(book);
-
-            System.out.println("Books in DB: " + bookService.findAll().size());
-        };
-    }
-
 }
