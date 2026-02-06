@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: library-manager
+  profiles:
+    active: dev
 
   datasource:
     url: jdbc:h2:mem:jbookshelfdb
