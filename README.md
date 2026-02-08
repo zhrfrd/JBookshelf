@@ -247,15 +247,15 @@ Exit:
 ```yaml
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/jbookshelf
-    username: jbookshelf
-    password: secret
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    show-sql: false
+
 ```
 
 #### 4 Activate PostgreSQL Profile
