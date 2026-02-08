@@ -138,7 +138,170 @@ JDBC URL:
 jdbc:h2:mem:jbookshelfdb
 ```
 
----
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Database Configuration Guide
+
+This project supports two databases:
+- H2 for local development and learning.
+- PostgreSQL for production setups.
+
+Spring profiles are used to switch between them.
+
+### H2 Configuration (Development)
+
+#### Configuration file
+
+`application-h2.yml`
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:h2:mem:jbookshelfdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+```
+
+#### Running with H2
+
+```bash
+mvn spring-boot:run -Dspring.profiles.active=h2
+```
+
+#### H2 Console
+
+```
+http://localhost:8080/h2-console
+JDBC URL: jdbc:h2:mem:jbookshelfdb
+```
+
+### PostgreSQL Configuration (Production)
+
+#### 1 Install PostgreSQL
+
+##### macOS (Homebrew)
+
+```bash
+brew install postgresql
+brew services start postgresql
+```
+
+##### Docker
+
+```bash
+docker run --name jbookshelf-postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  -p 5432:5432 \
+  -d postgres:16
+```
+
+#### 2 Create Database and User
+
+Connect as an admin user:
+
+```bash
+psql -U postgres
+```
+
+Then run:
+
+```sql
+CREATE ROLE jbookshelf WITH LOGIN PASSWORD 'secret';
+CREATE DATABASE jbookshelf OWNER jbookshelf;
+GRANT ALL PRIVILEGES ON DATABASE jbookshelf TO jbookshelf;
+```
+
+Exit:
+
+```sql
+\q
+```
+
+#### 3 PostgreSQL Configuration File
+
+`application-postgres.yml`
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jbookshelf
+    username: jbookshelf
+    password: secret
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+```
+
+#### 4 Activate PostgreSQL Profile
+
+##### Option A — via `application.yml`
+
+```yaml
+spring:
+  profiles:
+    active: postgres
+```
+
+##### Option B — via command line
+
+```bash
+mvn spring-boot:run -Dspring.profiles.active=postgres
+```
+
+## Environment Variables
+
+Database credentials are not committed to the repository.
+
+The application reads PostgreSQL connection details from environment variables which allows 
+the same codebase to be used safely across local development, CI, and production environments.
+
+### Required variables (PostgreSQL)
+
+- `DB_URL`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+
+### Example (local development)
+
+Write on your terminal:
+
+```bash
+export DB_URL=jdbc:postgresql://localhost:5132/myUrl
+export DB_USERNAME=myUsername
+export DB_PASSWORD=myPassword
+```
+
+Then run the app:
+
+```
+mvn spring-boot:run
+```
 
 ## Next improvements
 - [ ] PostgreSQL migration
