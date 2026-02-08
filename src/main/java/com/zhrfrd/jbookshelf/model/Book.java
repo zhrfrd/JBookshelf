@@ -1,11 +1,9 @@
 package com.zhrfrd.jbookshelf.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -21,6 +19,14 @@ public class Book {
     @Column(nullable = false, unique = true)
     private String isbn;
     private Integer publishedYear;
+
+    @ManyToMany
+    @JoinTable(
+            name = "book_categories",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
 
     protected Book() {}
 
