@@ -20,13 +20,12 @@ public class Book {
     private String isbn;
     private Integer publishedYear;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_categories",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
+    @OneToMany(
+            mappedBy = "book",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    private Set<Category> categories = new HashSet<>();
+    private Set<BookCategory> categories = new HashSet<>();
 
     protected Book() {}
 
@@ -71,5 +70,9 @@ public class Book {
 
     public void updatePublishedYear(Integer publishedYear) {
         this.publishedYear = publishedYear;
+    }
+
+    public void addCategory(Category category) {
+        categories.add(new BookCategory(this, category));
     }
 }
